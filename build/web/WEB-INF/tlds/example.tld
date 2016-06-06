@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<taglib>
+
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>exam</short-name>
+	<uri>/WEB-INF/tlds/example</uri>
+	
+	<tag>
+		<name>formBeanTag</name>
+		<tag-class>com.servlet.NewTagHandler</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>formBean</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+</taglib>

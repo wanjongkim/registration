@@ -1,0 +1,627 @@
+<!DOCTYPE HTML>
+<!-- saved from url=(0146)https://www.ibm.com/developerworks/dwwi/jsp/Register.jsp?lang=en_US&appname=developerworks&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Ftopics%2F -->
+<html lang="en" class="dj_webkit dj_chrome dj_contentbox"><head><meta charset="utf-8">
+
+<!-- SITE MON : START (DO NOT DELETE) -->
+<!-- developerWorks monitoring token -->
+<!-- SITE MON : END (DO NOT DELETE) -->
+
+<meta name="title" content="IBM developerworks: Sign in">
+<!-- <meta http-equiv="P3P" content="CP=&quot;IDC DSP COR CURa ADMa OUR IND PHY ONL COM STA&quot;">
+<meta http-equiv="Expires" content="0">
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/"> -->
+<link rel="shortcut icon" href="http://www.ibm.com/favicon.ico">
+<meta name="Owner" content="dW Information/Raleigh/IBM">
+<meta name="DC.Language" content="en">
+<meta name="IBM.Country" content="US">
+<meta name="Security" content="Public">
+<meta name="Abstract" content="Sign in to developerWorks, register with developerWorks, update your registration information, change or reset your password">
+<meta name="Description" content="Sign in to developerWorks, register with developerWorks, update your registration information, change or reset your password">
+<meta name="Keywords" content="IBM developerWorks registration, profile, sign in, register, password, account, ID">
+<meta name="Source" content="v17 delivery:developerWorks">
+<meta name="Robots" content="index,follow">
+<meta name="IBM.SpecialPurpose" content="SP001">
+<meta name="DC.Date" content="2005-02-25">
+<meta name="DC.Subject" content="ZZ999">
+<meta name="DC.Type" content="CT101">
+<meta name="DC.Rights" content="Copyright IBM Corporation 2009, 2014">
+<meta name="IBM.WTMCategory" content="SOFDCOTHZZ">    
+<meta name="IBM.Effective" content="2005-02-25">
+<meta name="DC.Publisher" content="IBM Corporation">
+<meta name="Last update" content="14032014spf">
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="./developerWorks_registration_files/www.css" rel="stylesheet" title="www" type="text/css">
+
+<!-- Masthead/footer -->
+<link href="./developerWorks_registration_files/dw-mf.css" media="screen" rel="stylesheet" title="www" type="text/css">
+<link href="./developerWorks_registration_files/dw-mf-minimal-N.css" media="screen" rel="stylesheet" title="www" type="text/css">
+<!-- Home CSS -->
+<link href="./developerWorks_registration_files/dwwi-v17.css" media="screen" rel="stylesheet" title="www" type="text/css">
+
+<script type="text/javascript" src="./developerWorks_registration_files/myJavascript.js" async></script>
+<script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/eluminate.js" id="tealium_cormetrics1239"></script><script src="./developerWorks_registration_files/utag.js" type="text/javascript" async></script><script type="text/javascript" src="./developerWorks_registration_files/www.js"></script><script type="text/javascript" src="./developerWorks_registration_files/eluminate(1).js"></script>
+<script type="text/javascript" src="./developerWorks_registration_files/dw-www.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/Dialog.xd.js"></script>
+
+<script type="text/javascript" src="./developerWorks_registration_files/prototype.js"></script>
+
+<script type="text/javascript"> ibmweb.config.sbs = false; </script>
+
+<!-- <SCRIPT src="//www.ibm.com/common/js/notice_choice_functions.js" type="text/javascript" charset="UTF-8"></SCRIPT> -->
+<!-- <SCRIPT src="//www.ibm.com/common/js/notice_choice.js" type="text/javascript" charset="UTF-8"></SCRIPT> -->
+
+<script type="text/javascript">
+	
+function removetempfunction () {
+	var whichindex = document.getElementById('SecurityQues').selectedIndex;
+	if (whichindex == 6) {
+		document.getElementById('customquestioncontainer').style.display = 'block';
+		document.getElementById('custom_question').value='';
+	}
+	else {
+		document.getElementById('customquestioncontainer').style.display = 'none';
+	}
+}
+
+</script>
+<title>developerWorks registration</title>
+<script type="text/javascript">
+
+	function checkEmail(emailAddress){
+		var Teamvalue = document.getElementById(emailAddress).value;
+		var vpreLang = 'en_US';
+		var vlang= "&lang=" + vpreLang;
+		var sb = "email="+ Teamvalue + vlang;
+		//sb = sb + "teamname=" + encodeURIComponent(Teamvalue.replace(/^\s+/g, '').replace(/\s+$/g, ''))+"&";
+	
+		var result=false;
+		if(Teamvalue != null && Teamvalue != ''){
+			new Ajax.Request('/developerworks/dwwi/jsp/emailExists.jsp?', 
+				{parameters:sb,
+				evalScripts:false, 
+				asynchronous:false,
+				encoding:'UTF-8', 
+				onSuccess: function(t) { 
+					var json = eval( "(" + t.responseText + ")" ); 
+					result = true;
+					if(json.result=='true') {
+					    document.getElementById('userid_valid').style.display = 'none';
+						document.getElementById('userid_invalid').style.display = 'inline';
+						document.getElementById('userid_invalid').innerHTML=json.message;
+						result = true;
+					} 
+				}, onFailure:function(t) { 
+					alert('onFail: ' + t.statusText);
+				} 	
+			});
+		}
+	
+		return result;  
+	}
+	
+	function checkDisplayname(displayName){
+		var Teamvalue = document.getElementById(displayName).value;
+              	var vpreLang = 'en_US';
+		var vlang= "&lang=" + vpreLang;
+		var sb = "displayname="+ Teamvalue + vlang;
+		//sb = sb + "teamname=" + encodeURIComponent(Teamvalue.replace(/^\s+/g, '').replace(/\s+$/g, ''))+"&";
+			
+       		var displayNamePat = "^([A-Za-z0-9@._-]+)$";
+		var matchArray = Teamvalue.match(displayNamePat);
+	
+		var result=false;
+		if( (Teamvalue == null) || (Teamvalue != null && Teamvalue.length < 3) || (matchArray == null)){
+			document.getElementById('alias_valid').style.display = 'none';
+			document.getElementById('alias_invalid').style.display = 'inline';
+			document.getElementById('alias_invalid').innerHTML='This display name is not valid. Please choose another.';
+			result = true;
+			return result;
+		}
+
+		if(Teamvalue != null && Teamvalue != ''){
+			new Ajax.Request('/developerworks/dwwi/jsp/displaynameExists.jsp?', 
+				{parameters:sb,
+				evalScripts:false, 
+				asynchronous:false,
+				encoding:'UTF-8', 
+				onSuccess: function(t) { 
+					var json = eval( "(" + t.responseText + ")" ); 
+					result = true;
+					if(json.result=='true') {
+					    document.getElementById('alias_valid').style.display = 'none';
+						document.getElementById('alias_invalid').style.display = 'inline';
+						document.getElementById('alias_invalid').innerHTML='This display name is taken. Please choose another.';
+						result = true;
+					} 
+				}, onFailure:function(t) { 
+					alert('onFail: ' + t.statusText);
+				} 	
+			});
+		}
+	
+		return result;  
+	}
+	    
+	function validatePassword() {
+       	var passwd = document.forms['register'].Password.value;
+    	var min_passwd_len = 8;
+    	var max_passwd_len = 31;
+    	
+    	if((passwd != null) && (passwd.length < min_passwd_len)){
+    		document.getElementById('password_valid').style.display = 'none';
+    		document.getElementById('password_invalid').style.display = 'inline';
+    		return "";
+       	}else if(passwd.length > max_passwd_len){
+       		document.getElementById('password_valid').style.display = 'none';
+    		document.getElementById('password_invalid').style.display = 'inline';
+    		return "";
+       	}
+       	
+       	var passwdPat= "^([A-Za-z0-9@._-]+)$";
+		var matchArray=passwd.match(passwdPat);
+		if (matchArray == null) {
+        	document.getElementById('password_valid').style.display = 'none';
+    		document.getElementById('password_invalid').style.display = 'inline';
+    		
+		}else{
+    		document.getElementById('password_invalid').style.display = 'none';
+    		document.getElementById('password_valid').style.display = 'inline';
+    	}
+    }
+    
+    function validateRePassword() {
+       	var passwd = document.forms['register'].Password.value;
+       	var re_passwd = document.forms['register'].RePassword.value;
+       	var min_passwd_len = 8;
+    	var max_passwd_len = 31;
+    	
+    	if((re_passwd != null) && (re_passwd.length < min_passwd_len)){
+    		document.getElementById('repassword_valid').style.display = 'none';
+    		document.getElementById('repassword_invalid').style.display = 'inline';
+    		document.getElementById('repassword_mismatch').style.display = 'none';
+    		return "";
+       	}else if(re_passwd.length > max_passwd_len){
+       		document.getElementById('repassword_valid').style.display = 'none';
+    		document.getElementById('repassword_invalid').style.display = 'inline';
+    		document.getElementById('repassword_mismatch').style.display = 'none';
+    		return "";
+       	}
+       	
+       	var passwdPat= "^([A-Za-z0-9@._-]+)$";
+		var matchArray=re_passwd.match(passwdPat);
+		
+		if (matchArray == null) {
+			document.getElementById('repassword_valid').style.display = 'none';
+    		document.getElementById('repassword_invalid').style.display = 'inline';
+    		document.getElementById('repassword_mismatch').style.display = 'none';
+    		return "";
+		}else if(re_passwd != passwd){
+    		document.getElementById('repassword_invalid').style.display = 'none';
+    		document.getElementById('repassword_valid').style.display = 'none';
+    		document.getElementById('repassword_mismatch').style.display = 'inline';
+    	}else{
+    		document.getElementById('repassword_invalid').style.display = 'none';
+    		document.getElementById('repassword_mismatch').style.display = 'none';
+    		document.getElementById('repassword_valid').style.display = 'inline';
+    	}
+    }
+    
+    
+    function assignSubmit(){
+    	document.getElementById('action').value = 'registerandtake';
+    	var isValid = "true";
+    	return isValid;
+    }
+    
+    
+    function isValidDisplay(){
+    	var alias = document.forms['register'].alias.value;
+    	var isValid = "true";
+    	if( (alias.indexOf("<") != -1) || (alias.indexOf(">") != -1) || (alias.indexOf(";") != -1) || 
+				(alias.indexOf(",") != -1) || (alias.indexOf("\"") != -1) || (alias.indexOf("'") != -1)){
+			isValid = "false";
+		}
+		return isValid;
+    }
+    
+    function validateDisplayName() {
+       	var alias = document.forms['register'].alias.value;
+       	var min_passwd_len = 3;
+    	var max_passwd_len = 31;
+    	var isValid = isValidDisplay();
+    	
+    	if((alias != null) && (alias.length < min_passwd_len)){
+    		document.getElementById('alias_valid').style.display = 'none';
+    		document.getElementById('alias_invalid').style.display = 'inline';
+       	}else if(alias.length > max_passwd_len){
+       		document.getElementById('alias_valid').style.display = 'none';
+    		document.getElementById('alias_invalid').style.display = 'inline';
+    	}else if(isValid == "false"){
+    		document.getElementById('alias_valid').style.display = 'none';
+    		document.getElementById('alias_invalid').style.display = 'inline';
+    	}else{
+    		document.getElementById('alias_invalid').style.display = 'none';
+    		document.getElementById('alias_valid').style.display = 'inline';
+    	}
+    }
+    
+    function validateUserID() {
+       	var emailStr = document.forms['register'].emailAddress.value;
+       	document.getElementById('userid_invalid').innerHTML='This is not a valid email address.';
+       	
+       	
+       	var min_passwd_len = 3;
+    	var max_passwd_len = 80;
+    	
+    	if((emailStr != null) && (emailStr.length < min_passwd_len)){
+    		document.getElementById('userid_valid').style.display = 'none';
+    		document.getElementById('userid_invalid').style.display = 'inline';
+    		return "";
+       	}else if(emailStr.length > max_passwd_len){
+       		document.getElementById('userid_valid').style.display = 'none';
+    		document.getElementById('userid_invalid').style.display = 'inline';
+    		return "";
+    	}
+    	
+    	emailStr = emailStr.replace("[" , "");
+    	emailStr = emailStr.replace("]" , "");
+    	
+    	//var emailPat=/^(.+)@(.+)$/;
+    	var emailPat="^([A-Za-z0-9!#$%&'+-./=?^_`{|}~]+)@([A-Za-z0-9!#$%&'+-./=?^_`{|}~]+)[.]([A-Za-z0-9!#$%&'+-/=?^_`{|}~]{2,4})$";
+    	
+       	var specialChars="\\(\\)<>@,;:\\\\\\\"\\.\\[\\]";
+        var validChars="\[^\\s" + specialChars + "\]";
+       	var quotedUser="(\"[^\"]*\")";
+       	var atom=validChars + '+';
+       	var word="(" + atom + "|" + quotedUser + ")";
+       	var userPat=new RegExp("^" + word + "(\\." + word + ")*$");
+       	var domainPat=new RegExp("^" + atom + "(\\." + atom + ")*$");
+       
+       	var matchArray=emailStr.match(emailPat);
+       	if (matchArray == null) {
+            document.getElementById('userid_valid').style.display = 'none';
+    		document.getElementById('userid_invalid').style.display = 'inline';
+    		return "";
+       	}else{
+		
+       		var user=matchArray[1];
+       		var domain=matchArray[2];
+       		
+       		if (user.match(userPat) == null) {
+           		document.getElementById('userid_valid').style.display = 'none';
+    			document.getElementById('userid_invalid').style.display = 'inline';
+    			return "";
+       		}else{
+       			var domainArray=domain.match(domainPat);
+       			if (domainArray == null) {
+           			document.getElementById('userid_valid').style.display = 'none';
+    				document.getElementById('userid_invalid').style.display = 'inline';
+    				return "";
+       			}else{
+       				document.getElementById('userid_valid').style.display = 'inline';
+    				document.getElementById('userid_invalid').style.display = 'none';
+    				return "";
+       			}
+       		}
+       	}
+       
+    }
+    	
+           
+    
+</script>
+
+<script type="text/javascript" src="./developerWorks_registration_files/usen-utf8.js" id="dojoIoScript1" charset="utf-8"></script><script type="text/javascript" src="./developerWorks_registration_files/saved_resource" id="dojoIoScript2" charset="utf-8"></script><script type="text/javascript" src="./developerWorks_registration_files/profiling.js" id="dojoIoScript3" charset="utf-8"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/move.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/TimedMoveable.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/_CssStateMixin.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/_FormMixin.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/_DialogMixin.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/DialogUnderlay.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/ContentPane.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/common.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/TooltipDialog.xd.js"></script><script type="text/javascript" src="./developerWorks_registration_files/blackwhite_lists.json" id="dojoIoScript4" charset="utf-8"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/Mover.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/Moveable.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/_ContentPaneResizeMixin.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/html.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/loading.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/common.xd(1).js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/autoscroll.xd.js"></script><script type="text/javascript" charset="utf-8" src="./developerWorks_registration_files/_LayoutWidget.xd.js"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.1790.js" id="utag_ibm.main_1790"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.1239.js" id="utag_ibm.main_1239"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.694.js" id="utag_ibm.main_694"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.699.js" id="utag_ibm.main_699"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.752.js" id="utag_ibm.main_752"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.763.js" id="utag_ibm.main_763"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.797.js" id="utag_ibm.main_797"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.1150.js" id="utag_ibm.main_1150"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.1172.js" id="utag_ibm.main_1172"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.1197.js" id="utag_ibm.main_1197"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.1260.js" id="utag_ibm.main_1260"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.1278.js" id="utag_ibm.main_1278"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/utag.1175.js" id="utag_ibm.main_1175"></script><script type="text/javascript" src="./developerWorks_registration_files/50200000.js"></script><script type="text/javascript" src="./developerWorks_registration_files/rules_50200000.js"></script><script type="text/javascript" src="./developerWorks_registration_files/dispatcher-v3.js"></script><script src="./developerWorks_registration_files/yahoo-min.js" type="text/javascript"></script><script src="./developerWorks_registration_files/cp-v3.js" type="text/javascript"></script><script src="./developerWorks_registration_files/json-min.js" type="text/javascript"></script><script type="text/javascript" async charset="utf-8" src="./developerWorks_registration_files/0152d13020470017f2459acd577004066009205e0093c" id="tealium_visitor_service_1175main"></script><script type="text/javascript" src="./developerWorks_registration_files/atrk.js" id="dojoIoScript5" charset="utf-8"></script></head>
+
+<body id="ibm-com" class="v17">
+
+	<div id="ibm-top" class="ibm-landing-page"><img src="./developerWorks_registration_files/ibm_logo_print.png" width="43" height="15" id="ibm-print-masthead" alt="IBM Print">
+		
+<!-- MASTHEAD_BEGIN -->
+<div id="ibm-masthead" role="banner">
+	<div id="dw-masthead-top-row">
+		<ul id="ibm-mast-options-dw" role="toolbar">
+			<li role="presentation" id="dw-mast-top-4">
+				<a href="http://www.ibm.com/developerworks/"><img src="./developerWorks_registration_files/dwn-dw-badge.png" width="43" height="22" alt="dW" aria-label="dW"></a>
+			</li>
+			<li role="presentation" id="dw-mast-top-3">
+				<a href="http://www.ibm.com/">IBM</a>
+			</li>
+		</ul>
+	</div>		
+	<div id="ibm-universal-nav-dw" aria-label="Site map">
+		<ul id="ibm-unav-links-dw">
+			<li id="ibm-unav-home-dwlogo">
+				<a href="http://www.ibm.com/developerworks/"><img src="./developerWorks_registration_files/dwn-dw-wordmark.png" width="225" height="28" alt="developerWorks&#xc2;&#xae;"></a>
+			</li>
+		</ul>
+	</div>	
+</div>
+<div id="fdiv" class="ibm-access"></div>
+<!-- MASTHEAD_END -->
+
+<!--<ul id="ibm-navigation-trail">
+<li class="dw-lc-wordmarkonly">&nbsp;</li>
+</ul>-->
+
+	<div id="ibm-leadspace-head" class="ibm-alternate ibm-alternate-5col">
+		<div id="ibm-leadspace-body" class="to-right">
+        	<br />
+			<h1 class="ibm-small">developerWorks registration</h1>
+		</div>
+	</div>
+	<br /> <br />
+	<div id="ibm-pcon" class="to-right">
+		<div id="ibm-content">
+			<div id="ibm-content-body">
+				<div id="ibm-content-main">
+					<!-- Begin 6-4 6-2 grid -->
+					<div class="ibm-columns">
+						<!-- Begin 6-4 grid -->
+						<div class="ibm-col-6-4">
+							
+							<pre>Thank you for registering with IBM developerWorks. To  simplify things, you can use the IBM ID and 
+password that you designate below across IBM.</pre>
+							<p>Asterisks (<span class="ibm-required red_asterick">*</span>) indicate fields required to complete this transaction.</p>
+
+							<form method="post" action="http://localhost:8080/Homework7/Servlet" class="ibm-row-form" name="register" id="registerform">
+								<h2 class="ibm-inner-subhead">Basic registration information</h2>
+								
+
+								<div class="ibm-columns">
+									<div class="ibm-col-2-1">
+										<p>
+											<label for="FName">First name:<span class="ibm-required">*</span></label> <span class="spacing-to-right"><label for="LName">Last name:<span class="ibm-required">*</span></label></span><br/>
+										  <span><input name="FName" id="FName" size="36" type="text" value="" aria-required="true" onchange="checkRegularInput(this)">
+										  <input name="LName" id="LName" size="36" type="text" value="" aria-required="true" onchange="checkRegularInput(this)"> <span id="NameError" style="display:none; color:red;">The inputs for the names are blank</span>
+										  </span> 
+										</p>
+									</div>
+									<div class="ibm-col-2-1">
+										<p>
+											
+											
+									  </p>
+									</div>
+								</div>
+
+								<p>
+									<label for="emailAddress">Email address:<span class="ibm-required">*</span><br>
+									<span class="ibm-additional-info dw-lc-labeloverride dw-lc-important-adjust ibm-item-note gray_color">(This will also be your IBM ID for signing in)</span></label> <br />
+									<span><input name="UserID" id="emailAddress" size="42" type="text" value="" onchange="checkRegularInput(this)" aria-required="true"></span> <span id="userid_error" style="display:none; color:red;">This is not a valid email address</span>
+									 <span class="dw-lc-formerror" id="userid_invalid" style="display:none;">This is not a valid email address.</span>
+									<span class="dw-lc-formconfirm" id="userid_valid" style="display:none;">&nbsp;</span>
+								</p>
+
+								<p>
+									<label for="Password">Password:<span class="ibm-required">*</span><br> <span class="ibm-additional-info dw-lc-labeloverride dw-lc-important-adjust ibm-item-note gray_color">(Must be at least 8 characters)</span></label> <br/>
+									<span><input name="Password" id="Password" size="42" type="password" value="" onchange="checkRegularInput(this);"> </span>
+									<span id="password_error" style="display:none; color:red;">The password you entered is not valid</span> <span class="dw-lc-formerror" id="password_invalid" style="display:none;">The password you entered is not valid.</span>
+									<span class="dw-lc-formconfirm" id="password_valid" style="display:none;">&nbsp;</span> 
+								</p>
+
+								<p>
+									<label for="RePassword">Verify password:<span class="ibm-required">*</span></label> <br/>
+									<span><input name="RePassword" id="RePassword" size="42" type="password" value="" onchange="checkRegularInput(this)"></span>
+									<!-- <span class="dw-lc-formerror" id="repassword_mismatch" style="display:none;">The passwords did not match.</span>
+									<span class="dw-lc-formerror" id="repassword_invalid" style="display:none;">The password you entered is not valid.</span>
+									<span class="dw-lc-formconfirm" id="repassword_valid" style="display:none;">&nbsp;</span> -->
+								</p>
+
+								<p>
+									<label for="alias">Display name:<span class="ibm-required">*</span><br>
+										<span class="gray_color ibm-additional-info dw-lc-labeloverride dw-lc-important-adjust ibm-item-note">(Must be between 3 - 31 characters. 
+											<a class="ibm-feature-link" href="https://www.ibm.com/developerworks/dwwi/jsp/Register.jsp?lang=en_US&amp;appname=developerworks&amp;d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Ftopics%2F#overlay2" onClick="ibmweb.overlay.show(&#39;overlay2&#39;, this);return false;">Tips for choosing display name.</a>)
+										</span>
+									</label> <br/>
+									<span><input name="alias" id="alias" size="42" type="text" value="" onchange="checkRegularInput(this);" aria-required="true"></span> <span id="display_error" style="color:red; display:none;">Display name is invalid</span>
+									<span class="dw-lc-formerror" id="alias_invalid" style="display:none;">This display name is not valid. Please choose another.</span>
+									<span class="dw-lc-formconfirm" id="alias_valid" style="display:none;">&nbsp;</span>
+								</p>
+
+								<!-- SUPPLEMENTAL OVERLAYS START HERE -->
+								<div class="ibm-common-overlay" id="overlay2">
+									<div class="ibm-head">
+										<p>
+											
+										</p>
+									</div>
+
+									<div class="ibm-body">
+										<div class="ibm-main">
+											<a class="ibm-access" id="overlaylink2"><!-- Accessibility anchor --></a>
+<!--  
+											<div class="ibm-title">
+												<h1>Choose your display name carefully...</h1>
+											</div>
+
+											<div class="ibm-container ibm-alternate">
+												<div class="ibm-container-body">
+													<p>Your display name accompanies the content that you post on developerWorks. Other users will recognize and associate your display name with you. Your display name:</p>
+													<ul>
+															<li>Easily and publicly identifies you. Samples: brenny, JeffJ, lindameyer, and Michael_OConnell</li>
+															<li>Should not be your email address (for privacy reasons)</li>
+															<li>You can change your display name in your profile</li>
+														</ul>
+													
+												</div>
+											</div> -->
+										</div>
+									</div>
+									<div class="ibm-footer"></div>
+								</div>
+								<!-- SUPPLEMENTAL OVERLAYS END HERE -->
+
+								<p>
+									<label for="countryResidence">Country/region of residence:<span class="ibm-required">*</span><br>
+									<span class="ibm-additional-info dw-lc-labeloverride dw-lc-important-adjust ibm-item-note gray_color">(Required for warranty)</span></label> <br/>
+									<span id="countrySpan">
+										<select name="CountryOfRes" id="countryResidence" onblur="validate(this);">
+											
+												<option value="CountryOfResDefault" selected>Select one</option>
+<option value="EH">Western Sahara</option>
+<option value="YE">Yemen</option>
+<option value="ZM">Zambia</option>
+<option value="ZW">Zimbabwe</option>
+<option value="US">United States</option>
+
+										</select> 
+									</span>
+								</p>
+
+								<div class="ibm-columns">
+									<div class="ibm-col-2-1">
+										<p>
+											<label for="City">City:</label> <span id="space-right"><label for="Language">Language:<span class="ibm-required">*</span></label></span> <br/>
+											<span><input name="City" id="City" size="36" type="text" value=""> <span>
+												<select name="Language" id="Language" onchange="checkRegularInput(this)">
+													<option value="">Select one</option>
+<option value="xh-ZA">Xhosa</option>
+<option value="yi-IL">Yiddish</option>
+<option value="yo-NG">Yoruba</option>
+<option value="za-CN">Zhuang</option>
+<option value="zu-ZA">Zulu</option>
+
+												</select>
+											</span></span> <span id="language_error" style="color:red; display:none;">Select one of the languages in the drop-down</span>
+										</p>
+									</div>
+										
+									
+								</div>
+
+								<pre>Please select a security question that only you can answer or create your own. Then enter the answer to the 
+question. Occasionally, you may be asked to answer this question to confirm your identity.</pre>
+
+								<div class="ibm-columns">
+									<div class="ibm-col-2-1">
+										<p>
+											<label for="SecurityQues">Security question:<span class="ibm-required">*</span></label> <br />
+											<span>
+												<select name="SecurityQues" id="SecurityQues" onChange="removetempfunction(); checkRegularInput(this);">
+													<option selected="selected" value="">Select one</option>
+													<option value="name">What is your mother's maiden name?</option>
+													<option value="pet">What is the name of your first pet?</option>
+													<option value="school">What was the name of your first school?</option>
+													<option value="job">In what city or town was your first job?</option>
+													<option value="country">In what country were you born?</option>
+												</select>
+                                                <span id="security_error2" style="display:none; color:red;">
+                                                Select one of the security question
+                                                </span>
+											</span>
+										</p>
+									</div>
+									<div class="ibm-col-2-1">
+										<p id="customquestioncontainer" style="display:none;
+">
+											<label for="custom_question">Place a question in this text field.</label>
+											<span><input name="custom_question" id="custom_question" size="42" type="text" value=""></span>
+										</p>
+									</div>
+								</div>
+
+								<p>
+									<label for="SecurityAns">Answer to security question:<span class="ibm-required">*</span></label> <br />
+									<span><input name="SecurityAns" id="SecurityAns" size="42" type="text" value="" aria-required="true" onChange="securityFunction(this);"></span>
+                                    <span id="security_error" style="display:none; color:red;">The answer to security question is blank</span>
+                                    
+								</p>
+<hr class="horizontal-line" />
+								
+									<br/>
+								<h2 class="ibm-alternate-rule" id="go-up">Privacy preferences</h2>
+								<div id="privacyid">
+									<p>Please keep me informed of products, services and offerings from IBM companies worldwide.</p>
+<p>
+<span class="ibm-input-group">
+<input id="NC_CHECK_EMAIL" value="0" name="NC_CHECK_EMAIL" type="checkbox">
+<label for="NC_CHECK_EMAIL">by email.</label></span><br>
+<span class="ibm-input-group">
+<input id="NC_CHECK_OTHER" value="4" name="NC_CHECK_OTHER" type="checkbox">
+<label for="NC_CHECK_OTHER">by telephone or postal mail.</label></span><br>
+</p>
+<p>I accept&nbsp; <a href="http://www.ibm.com/privacy/us/en/" target="_blank">IBM's Privacy statement</a>.</p>
+
+									<p>All fields are required to complete this transaction.</p>
+
+								</div>
+
+								<div class="ibm-alternate-rule"><hr class="horizontal-line" /></div>
+
+								<p>By selecting the <strong>Register</strong> link, I agree to the developerWorks&nbsp;<a class="ibm-feature-link" href="https://www.ibm.com/developerworks/mydeveloperworks/terms?lang=en">terms of use</a>.</p>
+
+								<div class="ibm-buttons-row">
+									<p>
+									  <input id="ibm-submit" name="ibm-submit" class="ibm-btn-arrow-pri" value="Register" type="submit">
+										<span class="ibm-sep"></span>
+										<input value="Cancel" type="button" name="ibm-cancel" id="cancel-button" class="ibm-btn-cancel-sec" onClick="window.location(window.location.href = &#39;http://www.ibm.com/developerworks/topics/&#39;)">
+									</p>
+								</div>
+
+								<div class="dw-lc-spacevertical">&nbsp;</div><div class="dw-lc-spacevertical">&nbsp;</div>
+
+							</form>
+						</div>
+						<!-- End 6-4 grid -->
+							
+						<!-- Begin 6-2 grid -->
+						<div class="ibm-col-6-2">							
+							
+								<div class="ibm-container">
+									
+									<div class="ibm-container-body"> </div>
+								</div>
+							
+						</div>
+						<!-- End 6-2 grid -->
+					</div>
+				</div>
+			</div>
+
+			<div id="ibm-content-sidebar">
+				<div id="ibm-contact-module">
+					<!--IBM contact module-->
+				</div>
+
+				<div id="ibm-merchandising-module">
+					<!--IBM Web Merchandising Module-->
+				</div>
+			</div>
+
+			<!-- OVERLAY STARTS HERE -->
+			<div class="ibm-common-overlay" id="overlay">
+				<div class="ibm-head">
+					
+				</div>
+
+				<div class="ibm-body">
+					<div class="ibm-main">
+						<a class="ibm-access" id="overlaylink1"><!-- Accessibility anchor --></a>
+   
+						<div class="ibm-title">
+							
+						</div>
+						<div class="ibm-container ibm-alternate">
+						  <div class="ibm-container-body"> </div>
+						</div>
+   
+					</div>
+				</div>
+
+				<div class="ibm-footer"></div>
+			</div>
+			<!-- OVERLAY ENDS HERE -->
+
+
+		</div>
+
+		
+	</div>
+	
+
+<!-- FOOTER_END -->
+</div>
+
+
+</body></html>
